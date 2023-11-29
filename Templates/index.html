@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'component_render.css' %}">
+    <title>AutoRack Straightening Database</title>
+
+</head>
+<body>
+    <div class="layer">
+        <h1>AutoRack Straightening Database</h1>
+        <hr>
+        <div class="container">
+        <form id="myForm">
+            {% csrf_token %}
+            <div class="row" id="serial-num">
+            <div class="col-1">
+            <label for="serialnumber">Serial Number:</label>
+        </div>
+        <div class="col-2">
+            <input type="text" id="serialnumber" name="serialnumber">
+        </div>
+    </div>
+    <div class="side">
+    <div class="row">
+        <div class="col-1">
+            <label for="datefrom">Date From:</label>
+        </div>
+        <div class="col-2">
+            <input type="date" name="datefrom" id="datetimefrom">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="dateto">Date To:</label>
+        </div>
+        <div class="col-75">
+            <input type="date" name="dateto" id="dateto">
+        </div>
+    </div>
+</div>
+<div class="side">
+    <div class="row" id="time-from">
+        <div class="col-1">
+            <label for="timefrom">Time From:</label>
+        </div>
+        <div class="col-2">
+            <input type="time" name="timefrom" id="timefrom">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="timeto">Time To:</label>
+        </div>
+        <div class="col-75">
+            <input type="time" name="timeto" id="timeto">
+        </div>
+        </div>
+    </div>
+    <button class="submit">Submit</button>        </form>
+    </div>
+    </div>
+    <div id="data-container"></div>
+    <script defer src="{% static 'script1.js' %}" ></script>
+</body>
+</html>

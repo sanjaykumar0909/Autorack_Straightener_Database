@@ -1,0 +1,27 @@
+import psycopg2 as pg
+from psycopg2 import extras
+
+hostname = "localhost"
+database = "Autorack_database"
+username = "postgres"
+pwd = "260474"
+port = 5432
+
+cursor= connection= None
+try:
+    connection= pg.connect(
+        host= hostname,
+        dbname= database,
+        user= username,
+        password= pwd,
+        port= port
+    )
+    cursor= connection.cursor(cursor_factory= extras.DictCursor)
+
+
+
+except Exception as e:
+    print(e)
+finally:
+    cursor.close()
+    connection.close()
