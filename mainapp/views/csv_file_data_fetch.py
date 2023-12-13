@@ -1,6 +1,6 @@
 import django.http
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from ..models import CsvFileData as Cfd
 import json
 
