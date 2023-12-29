@@ -5,8 +5,8 @@ urlpatterns=[
 
     path('', initial_component_fetch.index),
     path('fetch-components/',  initial_component_fetch.handle),
-    path('backend-url/', csv_file_info_fetch.index),
+    path('backend-url/', csv_file_info_fetch.index),# this url pattern brings new form page for fetching csv_file_info
     path('fetch-csv-file/', csv_file_info_fetch.handle),
-    path('file-data-page/', csv_file_data_fetch.index)
+    path('file-data-page/', csv_file_data_fetch.index),
 
 ]
