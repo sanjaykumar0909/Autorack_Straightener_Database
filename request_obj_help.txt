@@ -1,0 +1,36 @@
+request.method:
+Indicates the HTTP method used for the request (e.g., 'GET', 'POST', 'PUT', 'DELETE').
+
+request.path:
+Represents the path of the requested resource in the URL.
+
+request.GET:
+A dictionary-like object containing GET parameters from the query string of the URL.
+
+request.POST:
+A dictionary-like object containing POST parameters from the request body. It is only populated for form submissions with a content type of 'application/x-www-form-urlencoded' or 'multipart/form-data'.
+
+request.body:
+Contains the raw data of the request body as bytes. Useful for handling data in various content types, such as JSON.
+returns 'byte' dtype
+
+request.FILES:
+A dictionary-like object containing uploaded files, typically used with form submissions that include file uploads.
+
+request.COOKIES:
+A dictionary-like object containing cookies sent by the client.
+
+request.META:
+A dictionary containing all available HTTP headers and other metadata about the request.
+
+request.user:
+Represents the user associated with the request. This can be an instance of the User model or an anonymous user.
+
+request.session:
+Provides access to the session data for the current request. The session data is stored on the server and can be used to persist information between requests.
+
+request.is_ajax():
+A method that returns True if the request is an AJAX request.
+
+request.scheme:
+Indicates the URL scheme used for the request ('http' or 'https').
