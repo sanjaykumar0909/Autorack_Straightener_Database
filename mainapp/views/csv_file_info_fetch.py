@@ -1,19 +1,9 @@
 import django.http
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseServerError
 from ..models import CsvFileInfo as Cfi
 from django.views.decorators.csrf import csrf_exempt
 
 comp_serial_num= None
-
-@csrf_exempt
-def index(request):
-    global comp_serial_num
-    comp_serial_num= int(request.GET['id'])
-    temp= {
-        'component_serial_num': comp_serial_num,
-    }
-    return render(request, "csv_file_info.html", {'temp_data': temp})
 
 @csrf_exempt
 def handle(request):
@@ -24,7 +14,9 @@ def handle(request):
             return by_serialnumber(csv_file_serial_num)
         else:
             return by_timestamp(data)
-    except Exception as e: print(e)
+    except Exception as e:
+        print(e)
+        return HttpResponseServerError(str(e).encode())
 
 def by_serialnumber(serialnumber: int)-> django.http.HttpResponse:
     try:
@@ -42,6 +34,7 @@ def by_serialnumber(serialnumber: int)-> django.http.HttpResponse:
 
 def by_timestamp(data)-> django.http.HttpResponse:
     from datetime import datetime
+    cmp_serial_num= data['cmpserialnumber']
     date_from = data['datefrom']
     date_to = data['dateto']
     time_from = data['timefrom']
@@ -56,9 +49,13 @@ def by_timestamp(data)-> django.http.HttpResponse:
             start_time = datetime.strptime(f"{date_from} {time_from}", "%Y-%m-%d %H:%M")
             end_time = datetime.strptime(f"{date_to} {time_to}", "%Y-%m-%d %H:%M")
     else:
-        return HttpResponse("<script>alert('Enter date if you didn't entered serial number')</script>")
+        ersp = HttpResponse("Invalid data format for csv_file_info sent to backend", status=400)
+        ersp['Content-Type'] = 'text/plain'
+        return ersp
 
-    db_csv_files= Cfi.objects.filter(creation_time__gt= start_time, creation_time__lt= end_time)
+    db_csv_files= Cfi.objects\
+        .filter(component_serial_num=cmp_serial_num)\
+        .filter(creation_time__gt= start_time, creation_time__lt= end_time)
     send_components=[]
     for record in db_csv_files:
         add_dict= dict()
