@@ -24,8 +24,8 @@ def by_serialnumber(serialnumber: int) -> django.http.HttpResponse:
         send_components["component_serial_num"]= serialnumber
         send_components["start_time"]= db_component.start_time
         send_components["end_time"]= db_component.end_time
-        print(send_components)
-        return JsonResponse(send_components, safe=False)
+        print([send_components])
+        return JsonResponse([send_components], safe=False)
     except Exception as e:
         print(e)
 def by_timestamp(data) -> django.http.HttpResponse:

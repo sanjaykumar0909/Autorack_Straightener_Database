@@ -8,14 +8,16 @@ comp_serial_num= None
 @csrf_exempt
 def handle(request):
     data= request.POST
+    print('a',data)
     try:
-        csv_file_serial_num= data['serialnumber'].strip()
+        csv_file_serial_num= data['SerialNo'].strip()
+        print('b',csv_file_serial_num)
         if (len(csv_file_serial_num)!=0):
             return by_serialnumber(csv_file_serial_num)
         else:
             return by_timestamp(data)
     except Exception as e:
-        print(e)
+        print('error occured', e)
         return HttpResponseServerError(str(e).encode())
 
 def by_serialnumber(serialnumber: int)-> django.http.HttpResponse:
@@ -27,18 +29,18 @@ def by_serialnumber(serialnumber: int)-> django.http.HttpResponse:
         send_csv_file_info['x_distance']= db_csv_file.x_distance
         send_csv_file_info['servo_angle']= db_csv_file.servo_angle
         send_csv_file_info['max_deflection']= db_csv_file.max_deflection
-        print(send_csv_file_info)
+        print('c',send_csv_file_info)
         return JsonResponse([send_csv_file_info], safe=False)
     except Exception as e:
         print(e)
 
 def by_timestamp(data)-> django.http.HttpResponse:
     from datetime import datetime
-    cmp_serial_num= data['cmpserialnumber']
-    date_from = data['datefrom']
-    date_to = data['dateto']
-    time_from = data['timefrom']
-    time_to = data['timeto']
+    cmp_serial_num= data['cmpserialno']
+    date_from = data['DateFrom']
+    date_to = data['DateTo']
+    time_from = data['TimeFrom']
+    time_to = data['TimeTo']
 
     # form handling
     if (len(date_from) != 0 or len(date_to) != 0):
