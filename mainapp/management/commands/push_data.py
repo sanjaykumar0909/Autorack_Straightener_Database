@@ -35,7 +35,7 @@ class Command(BaseCommand):
                         x_distance= x_dist,
                         servo_angle= angle,
                         max_deflection= max_def,
-                        component_serial_num= Comp.objects.get(component_serial_num= 1),
+                        component_serial_num= Comp.objects.latest("component_serial_num"),
                         cycles= cycles(csv_file)
                     )
                 cfi_rec.save()
