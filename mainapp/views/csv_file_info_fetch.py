@@ -22,6 +22,7 @@ def handle(request):
 
 def by_serialnumber(serialnumber: int)-> django.http.HttpResponse:
     try:
+        # fetch entry by serial number, get its details and send the response
         db_csv_file= Cfi.objects.get(pk=serialnumber)
         send_csv_file_info= dict()
         send_csv_file_info['csv_file_serial_num']= serialnumber
@@ -55,11 +56,12 @@ def by_timestamp(data)-> django.http.HttpResponse:
         ersp['Content-Type'] = 'text/plain'
         return ersp
 
+    # django ORM query to fetch data
     db_csv_files= Cfi.objects\
         .filter(component_serial_num=cmp_serial_num)\
         .filter(creation_time__gt= start_time, creation_time__lt= end_time)
     send_components=[]
-    for record in db_csv_files:
+    for record in db_csv_files: # get data of each fetched csv_file_info
         add_dict= dict()
         add_dict["csv_file_serial_num"]= record.csv_file_serial_num
         add_dict["creation_time"]= record.creation_time

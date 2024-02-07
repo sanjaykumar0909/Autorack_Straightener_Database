@@ -19,7 +19,7 @@ def handle(request):
 
 def by_serialnumber(serialnumber: int) -> django.http.HttpResponse:
     try:
-        db_component= Cmp.objects.get(pk= serialnumber)
+        db_component= Cmp.objects.get(pk= serialnumber) # get data by serial number
         send_components = dict()
         send_components["component_serial_num"]= serialnumber
         send_components["start_time"]= db_component.start_time
@@ -30,6 +30,7 @@ def by_serialnumber(serialnumber: int) -> django.http.HttpResponse:
         print(e)
 def by_timestamp(data) -> django.http.HttpResponse:
     from datetime import datetime
+    # get data requested by user
     date_from= data['datefrom']
     date_to= data['dateto']
     time_from= data['timefrom']
@@ -48,6 +49,7 @@ def by_timestamp(data) -> django.http.HttpResponse:
         ersp['Content-Type']= 'text/plain'
         return ersp
 
+    # django ORM query for fetching components by time
     db_components = Cmp.objects.filter(start_time__gt= start_time, end_time__lt= end_time)
     send_components=[]
     for record in db_components:

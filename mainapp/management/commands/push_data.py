@@ -13,12 +13,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         OUTPUT_FOLDER = "C:\\Users\\2003s\\OneDrive\\Desktop\\Internship\\Output"
-        INPUT_FOLDER = "C:\\Users\\2003s\\OneDrive\\Desktop\\Internship\\New Folder"
+        INPUT_FOLDER = "C:\\Users\\2003s\\OneDrive\\Desktop\\Internship\\Input"
 
+        # continuously check both folders for csv file and output.txt
         while True:
             if (check_for_output(OUTPUT_FOLDER)):
                 output_file = os.path.join(OUTPUT_FOLDER, "output.txt")
 
+                # open and read output.txt
                 with open(output_file) as file:
                     x_dist = file.readline().strip()
                     max_def = file.readline().strip()
